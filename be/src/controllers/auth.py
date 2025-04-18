@@ -50,7 +50,7 @@ def login(request: Request):
 async def callback(request: Request):
     STREAMLIST_HOSTNAME = os.getenv(
         "STREAMLIST_HOSTNAME", "http://127.0.0.1:8501")
-    CURRENT_HOSTNAME = os.getenv("CURRENT_HOSTNAME", "http://localhost:8101")
+    CURRENT_HOSTNAME = os.getenv("CURRENT_HOSTNAME", "http://127.0.0.1:8101")
     # This is a backend endpoint
     REDIRECT_URI = f"{CURRENT_HOSTNAME}/auth/callback"
     state = request.session.get("state")
