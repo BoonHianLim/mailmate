@@ -1,0 +1,47 @@
+@startuml Tool Chaining Flow
+
+actor User
+participant "Virtual Assistant" as VA
+participant "LLM (Gemini 2.0 Flash)" as LLM
+participant "Summarize Tool" as Summarize
+participant "Search Tool" as Search
+
+autonumber
+hide footbox
+== Step 1: User input ==
+User -> VA : Provide input (text or voice)
+activate VA
+VA -> LLM : Send input + persona prompt
+activate LLM
+
+alt No tool needed
+    LLM --> VA : Response (natural language)
+    deactivate LLM
+    VA --> User : Respond based on personality
+    deactivate VA
+else Tool needed
+    activate LLM
+    LLM --> VA : Tool to invoke + parameters
+    deactivate LLM
+    activate VA
+    alt Summarize Tool
+        VA -> Summarize : Invoke with parameters
+        activate Summarize
+        Summarize --> VA : Plain-text summary
+        deactivate Summarize
+    else Search Tool
+        VA -> Search : Invoke with parameters
+        activate Search
+        Search --> VA : Email results (JSON)
+        deactivate Search
+    end
+
+    VA -> LLM : Send user input + tool output + persona prompt
+    activate LLM
+    LLM --> VA : Final response (natural language)
+    deactivate LLM
+    VA --> User : Respond based on personality
+deactivate VA
+end
+
+@enduml

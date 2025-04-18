@@ -1,0 +1,44 @@
+@startuml Authentication Flow
+
+actor User as usr
+participant "Streamlit Frontend" as fe
+participant "FastAPI Backend" as be
+participant "Google OAuth" as google
+
+autonumber
+hide footbox
+== 1. User Authentication ==
+usr -> fe : Clicks "Login with Google"
+activate fe
+fe -> be : Redirect to Google OAuth
+deactivate fe
+activate be
+be -> google : Redirect to Google OAuth
+deactivate be
+activate google
+google -> usr : Redirect to Google OAuth login page
+usr -> google : User logs in and authorizes
+google -> be : Redirect back to FastAPI with auth code
+activate be
+be -> google : Exchange auth code for access token
+google -> be : Obtain access token and user info
+deactivate google
+be -> be: Store access token and user info
+be -> fe : Redirect to Streamlit with\nunique token in cookie
+deactivate be
+activate fe
+fe -> usr : User logged in successfully
+deactivate fe
+
+== 2. Authenticated User Access ==
+usr -> fe : Access protected resources
+activate fe
+fe -> be: Request protected resources
+activate be
+be -> be: Validate unique token in cookie
+be --> fe : Return protected resources
+deactivate be
+fe --> usr : Display protected resources
+deactivate fe
+
+@enduml

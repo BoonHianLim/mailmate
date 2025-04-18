@@ -1,0 +1,15 @@
+streamlit==1.44.1
+fastapi[standard]==0.115.12
+google-api-python-client==2.166.0
+google-auth-oauthlib==1.2.1
+google-auth-httplib2==0.2.0
+itsdangerous==2.2.0
+streamlit-javascript==0.1.5
+beautifulsoup4
+langchain==0.3.14
+langchain-community==0.3.14
+langchain-core==0.3.29
+langchainhub==0.1.20
+streamlit_autorefresh
+grpcio
+langchain-google-genai

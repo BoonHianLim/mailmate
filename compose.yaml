@@ -1,0 +1,9 @@
+services:
+  mailmate:
+    build: .
+    image: mailmate:latest
+    ports:
+      - "8101:8101"
+      - "8501:8501"
+      - "12393:12393"
+  
